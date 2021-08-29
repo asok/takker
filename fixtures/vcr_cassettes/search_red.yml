@@ -1,0 +1,61 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.yelp.com/v3/businesses/search?attributes=hot_and_new&latitude=37.767413217936834&longitude=-122.42820739746094&offset=0&open_now=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.4
+      Authorization:
+      - Bearer test-api-key
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '197'
+      Content-Type:
+      - application/json
+      X-Routing-Service:
+      - routing-main--useast1-54cbd4db6f-x524c; site=public_api_v3
+      X-Zipkin-Id:
+      - 41d6edb91f30dde0
+      Server:
+      - envoy
+      X-B3-Sampled:
+      - '0'
+      X-Cloudmap:
+      - routing_useast1
+      X-Proxied:
+      - 10-65-175-160-useast1bprod
+      X-Extlb:
+      - 10-65-175-160-useast1bprod
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Sun, 29 Aug 2021 19:13:58 GMT
+      Via:
+      - 1.1 varnish
+      X-Served-By:
+      - cache-vie6333-VIE
+      X-Cache:
+      - MISS
+      X-Cache-Hits:
+      - '0'
+    body:
+      encoding: UTF-8
+      string: '{"error": {"code": "VALIDATION_ERROR", "description": "''Bearer test-api-key''
+        does not match ''^(?i)Bearer [A-Za-z0-9\\\\-\\\\_]{128}$''", "field": "Authorization",
+        "instance": "Bearer test-api-key"}}'
+  recorded_at: Sun, 29 Aug 2021 19:13:56 GMT
+recorded_with: VCR 6.0.0

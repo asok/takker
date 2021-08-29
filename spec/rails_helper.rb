@@ -22,7 +22,16 @@ require 'rspec/rails'
 #
 # Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f }
 
+ENV['YELP_API_KEY'] = 'test-api-key'
+
+require 'vcr'
 require 'database_cleaner/mongoid'
+
+VCR.configure do |config|
+  config.cassette_library_dir = "fixtures/vcr_cassettes"
+  config.hook_into :webmock
+end
+
 RSpec.configure do |config|
   # Remove this line to enable support for ActiveRecord
   config.use_active_record = false

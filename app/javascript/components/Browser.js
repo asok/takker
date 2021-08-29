@@ -60,15 +60,6 @@ function PlaceCard({place, classes, idx}) {
           />
           <CardContent>
             <Typography variant="body2" component="div">
-              Categories
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="div">
-              <ul>
-                {place.categories.map((c, i) => <li key={i}>{c.title}</li>)}
-              </ul>
-            </Typography>
-
-            <Typography variant="body2" component="div">
               Rating: {place.rating}/10
             </Typography>
 

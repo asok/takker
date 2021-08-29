@@ -30,7 +30,7 @@ module Takker
     # in config/environments, which are processed later.
     #
     # config.time_zone = "Central Time (US & Canada)"
-    # config.eager_load_paths << Rails.root.join("extras")
+    config.autoload_paths += [Rails.root.join("app", "services")]
 
     # Don't generate system test files.
     config.generators.system_tests = nil

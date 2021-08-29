@@ -1,0 +1,194 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.yelp.com/v3/businesses/search?attributes=hot_and_new&latitude=37.767413217936834&longitude=-122.42820739746094&offset=0&open_now=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.17.4
+      Authorization:
+      - Bearer test-api-key
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      X-Routing-Service:
+      - routing-main--useast1-54cbd4db6f-b8bl9; site=public_api_v3
+      Ratelimit-Dailylimit:
+      - '5000'
+      X-B3-Sampled:
+      - '0'
+      Ratelimit-Remaining:
+      - '4997'
+      Ratelimit-Resettime:
+      - '2021-08-30T00:00:00+00:00'
+      X-Zipkin-Id:
+      - 444bd2c89044b02f
+      Server:
+      - envoy
+      X-Cloudmap:
+      - routing_useast1
+      X-Proxied:
+      - 10-65-160-255-useast1bprod
+      X-Extlb:
+      - 10-65-160-255-useast1bprod
+      Cache-Control:
+      - max-age=0, no-store, private, no-transform
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Sun, 29 Aug 2021 19:12:02 GMT
+      Via:
+      - 1.1 varnish
+      X-Served-By:
+      - cache-vie6320-VIE
+      X-Cache:
+      - MISS
+      X-Cache-Hits:
+      - '0'
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"businesses": [{"id": "vmwLmMvOK-JB2uT3Cqinyw", "alias": "spro-coffee-lab-san-francisco-8",
+        "name": "SPRO Coffee Lab", "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/lIm4CTAKYJPYtzpp9cRjdw/o.jpg",
+        "is_closed": false, "url": "https://www.yelp.com/biz/spro-coffee-lab-san-francisco-8?adjust_creative=P2GaK6HBQNVuRV1M6JE1_w&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=P2GaK6HBQNVuRV1M6JE1_w",
+        "review_count": 28, "categories": [{"alias": "coffee", "title": "Coffee &
+        Tea"}, {"alias": "cafes", "title": "Cafes"}], "rating": 5.0, "coordinates":
+        {"latitude": 37.76280950492828, "longitude": -122.4286748}, "transactions":
+        [], "price": "$", "location": {"address1": "500 Church St", "address2": "",
+        "address3": null, "city": "San Francisco", "zip_code": "94114", "country":
+        "US", "state": "CA", "display_address": ["500 Church St", "San Francisco,
+        CA 94114"]}, "phone": "+14158283106", "display_phone": "(415) 828-3106", "distance":
+        513.5550968493183}, {"id": "PeVhtpG9PjHWmYgtO6kV3w", "alias": "luna-san-francisco-3",
+        "name": "LUNA", "image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/4gNmCGdk-aY5y2E_qxQMXQ/o.jpg",
+        "is_closed": false, "url": "https://www.yelp.com/biz/luna-san-francisco-3?adjust_creative=P2GaK6HBQNVuRV1M6JE1_w&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=P2GaK6HBQNVuRV1M6JE1_w",
+        "review_count": 35, "categories": [{"alias": "newamerican", "title": "American
+        (New)"}, {"alias": "brasseries", "title": "Brasseries"}, {"alias": "desserts",
+        "title": "Desserts"}], "rating": 4.0, "coordinates": {"latitude": 37.76189,
+        "longitude": -122.42191}, "transactions": [], "location": {"address1": "694
+        Valencia St", "address2": null, "address3": "", "city": "San Francisco", "zip_code":
+        "94110", "country": "US", "state": "CA", "display_address": ["694 Valencia
+        St", "San Francisco, CA 94110"]}, "phone": "+14157370908", "display_phone":
+        "(415) 737-0908", "distance": 826.7141567898306}, {"id": "AzFqspVE3gUWYaEselXLUA",
+        "alias": "khob-khun-thai-cuisine-and-breakfast-san-francisco-2", "name": "Khob
+        Khun Thai Cuisine & Breakfast", "image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/NG8d5IBGx7Jak9L4lR-qhA/o.jpg",
+        "is_closed": false, "url": "https://www.yelp.com/biz/khob-khun-thai-cuisine-and-breakfast-san-francisco-2?adjust_creative=P2GaK6HBQNVuRV1M6JE1_w&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=P2GaK6HBQNVuRV1M6JE1_w",
+        "review_count": 42, "categories": [{"alias": "breakfast_brunch", "title":
+        "Breakfast & Brunch"}, {"alias": "thai", "title": "Thai"}], "rating": 5.0,
+        "coordinates": {"latitude": 37.78107129493808, "longitude": -122.45966259993912},
+        "transactions": ["delivery", "pickup"], "price": "$$", "location": {"address1":
+        "3741 Geary Blvd", "address2": null, "address3": "", "city": "San Francisco",
+        "zip_code": "94118", "country": "US", "state": "CA", "display_address": ["3741
+        Geary Blvd", "San Francisco, CA 94118"]}, "phone": "+14153794382", "display_phone":
+        "(415) 379-4382", "distance": 3154.3269086717473}, {"id": "fOiiJhDBImzWfwQ2TWfV8g",
+        "alias": "lady-luck-cafe-san-francisco", "name": "Lady Luck Cafe", "image_url":
+        "https://s3-media2.fl.yelpcdn.com/bphoto/wwX1e1cfBqktkBYVH09jCg/o.jpg", "is_closed":
+        false, "url": "https://www.yelp.com/biz/lady-luck-cafe-san-francisco?adjust_creative=P2GaK6HBQNVuRV1M6JE1_w&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=P2GaK6HBQNVuRV1M6JE1_w",
+        "review_count": 27, "categories": [{"alias": "coffee", "title": "Coffee &
+        Tea"}, {"alias": "bubbletea", "title": "Bubble Tea"}], "rating": 4.5, "coordinates":
+        {"latitude": 37.79588, "longitude": -122.40649}, "transactions": [], "location":
+        {"address1": "956 Grant Ave", "address2": null, "address3": "", "city": "San
+        Francisco", "zip_code": "94108", "country": "US", "state": "CA", "display_address":
+        ["956 Grant Ave", "San Francisco, CA 94108"]}, "phone": "", "display_phone":
+        "", "distance": 3689.963604585877}, {"id": "_So8n7b9vTY0kPo24VgzkA", "alias":
+        "sunset-squares-slice-shop-san-francisco", "name": "Sunset Squares Slice Shop",
+        "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/WBbZXe0CfxFrNyHfuNA0mA/o.jpg",
+        "is_closed": false, "url": "https://www.yelp.com/biz/sunset-squares-slice-shop-san-francisco?adjust_creative=P2GaK6HBQNVuRV1M6JE1_w&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=P2GaK6HBQNVuRV1M6JE1_w",
+        "review_count": 12, "categories": [{"alias": "pizza", "title": "Pizza"}, {"alias":
+        "bubbletea", "title": "Bubble Tea"}, {"alias": "italian", "title": "Italian"}],
+        "rating": 4.0, "coordinates": {"latitude": 37.77469, "longitude": -122.43802},
+        "transactions": [], "location": {"address1": "553 Divisadero St", "address2":
+        "", "address3": null, "city": "San Francisco", "zip_code": "94117", "country":
+        "US", "state": "CA", "display_address": ["553 Divisadero St", "San Francisco,
+        CA 94117"]}, "phone": "+14159268065", "display_phone": "(415) 926-8065", "distance":
+        1181.6188674862894}, {"id": "IEQMsGBITK5RPqHJ2SYi1A", "alias": "afterwork-bar-san-francisco",
+        "name": "afterwork bar", "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/eFDUPR33amLSgU5lOWj9Yw/o.jpg",
+        "is_closed": false, "url": "https://www.yelp.com/biz/afterwork-bar-san-francisco?adjust_creative=P2GaK6HBQNVuRV1M6JE1_w&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=P2GaK6HBQNVuRV1M6JE1_w",
+        "review_count": 6, "categories": [{"alias": "cocktailbars", "title": "Cocktail
+        Bars"}, {"alias": "burgers", "title": "Burgers"}, {"alias": "salad", "title":
+        "Salad"}], "rating": 4.5, "coordinates": {"latitude": 37.77707, "longitude":
+        -122.42318}, "transactions": [], "location": {"address1": "409 Gough St",
+        "address2": "", "address3": null, "city": "San Francisco", "zip_code": "94102",
+        "country": "US", "state": "CA", "display_address": ["409 Gough St", "San Francisco,
+        CA 94102"]}, "phone": "+14159402770", "display_phone": "(415) 940-2770", "distance":
+        1167.4260076543744}, {"id": "sfCuL9wb6NdMWB9LNS-wvQ", "alias": "la-vaca-birria-san-francisco-3",
+        "name": "La Vaca Birria", "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/cXbGcF7w_FpawPro6NdDZw/o.jpg",
+        "is_closed": false, "url": "https://www.yelp.com/biz/la-vaca-birria-san-francisco-3?adjust_creative=P2GaK6HBQNVuRV1M6JE1_w&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=P2GaK6HBQNVuRV1M6JE1_w",
+        "review_count": 4, "categories": [{"alias": "mexican", "title": "Mexican"},
+        {"alias": "halal", "title": "Halal"}, {"alias": "beerbar", "title": "Beer
+        Bar"}], "rating": 5.0, "coordinates": {"latitude": 37.75289, "longitude":
+        -122.41139}, "transactions": [], "location": {"address1": "2962 24th St",
+        "address2": null, "address3": "", "city": "San Francisco", "zip_code": "94110",
+        "country": "US", "state": "CA", "display_address": ["2962 24th St", "San Francisco,
+        CA 94110"]}, "phone": "+14157803811", "display_phone": "(415) 780-3811", "distance":
+        2184.679638912603}, {"id": "SxHWpSr1eITgSACGT4G6CQ", "alias": "shake-shack-san-francisco-5",
+        "name": "Shake Shack", "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/PLqnuShfMOho7-nCBnOxWQ/o.jpg",
+        "is_closed": false, "url": "https://www.yelp.com/biz/shake-shack-san-francisco-5?adjust_creative=P2GaK6HBQNVuRV1M6JE1_w&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=P2GaK6HBQNVuRV1M6JE1_w",
+        "review_count": 17, "categories": [{"alias": "burgers", "title": "Burgers"}],
+        "rating": 3.0, "coordinates": {"latitude": 37.7841, "longitude": -122.40614},
+        "transactions": ["delivery"], "price": "$$", "location": {"address1": "845
+        Market St", "address2": "Ste- 8", "address3": null, "city": "San Francisco",
+        "zip_code": "94103", "country": "US", "state": "CA", "display_address": ["845
+        Market St", "Ste- 8", "San Francisco, CA 94103"]}, "phone": "+16282672633",
+        "display_phone": "(628) 267-2633", "distance": 2716.345048511417}, {"id":
+        "bef8dFZh1zTfGA0nEHxhtQ", "alias": "joy-ride-pizza-san-francisco", "name":
+        "Joy Ride Pizza", "image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/gV4mEkii1ZmBALEs-OWtHQ/o.jpg",
+        "is_closed": false, "url": "https://www.yelp.com/biz/joy-ride-pizza-san-francisco?adjust_creative=P2GaK6HBQNVuRV1M6JE1_w&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=P2GaK6HBQNVuRV1M6JE1_w",
+        "review_count": 5, "categories": [{"alias": "cocktailbars", "title": "Cocktail
+        Bars"}, {"alias": "italian", "title": "Italian"}, {"alias": "wine_bars", "title":
+        "Wine Bars"}], "rating": 5.0, "coordinates": {"latitude": 37.784492648786966,
+        "longitude": -122.40192320000001}, "transactions": ["delivery", "pickup"],
+        "location": {"address1": "730 Howard St", "address2": "", "address3": null,
+        "city": "San Francisco", "zip_code": "94103", "country": "US", "state": "CA",
+        "display_address": ["730 Howard St", "San Francisco, CA 94103"]}, "phone":
+        "+16288673909", "display_phone": "(628) 867-3909", "distance": 2990.545126563355},
+        {"id": "FV3JpvP5PqvNzuXNhxxTzg", "alias": "red-pepper-express-food-truck-mountain-view-2",
+        "name": "Red Pepper Express Food Truck", "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/gICVNAqj4u_iCQuSDzKV2A/o.jpg",
+        "is_closed": false, "url": "https://www.yelp.com/biz/red-pepper-express-food-truck-mountain-view-2?adjust_creative=P2GaK6HBQNVuRV1M6JE1_w&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=P2GaK6HBQNVuRV1M6JE1_w",
+        "review_count": 19, "categories": [{"alias": "foodtrucks", "title": "Food
+        Trucks"}, {"alias": "asianfusion", "title": "Asian Fusion"}], "rating": 4.5,
+        "coordinates": {"latitude": 37.40223, "longitude": -122.10589}, "transactions":
+        ["delivery", "pickup"], "location": {"address1": "2339 California St", "address2":
+        null, "address3": "", "city": "Mountain View", "zip_code": "94040", "country":
+        "US", "state": "CA", "display_address": ["2339 California St", "Mountain View,
+        CA 94040"]}, "phone": "+14089048620", "display_phone": "(408) 904-8620", "distance":
+        49539.546060791516}, {"id": "q2iCxlVFOAVplRZlLazuhQ", "alias": "the-bite-san-francisco-2",
+        "name": "The Bite", "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/aLKBNofyP9uw1JlRaeRIAg/o.jpg",
+        "is_closed": false, "url": "https://www.yelp.com/biz/the-bite-san-francisco-2?adjust_creative=P2GaK6HBQNVuRV1M6JE1_w&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=P2GaK6HBQNVuRV1M6JE1_w",
+        "review_count": 3, "categories": [{"alias": "mediterranean", "title": "Mediterranean"},
+        {"alias": "vegan", "title": "Vegan"}, {"alias": "gluten_free", "title": "Gluten-Free"}],
+        "rating": 5.0, "coordinates": {"latitude": 37.78128, "longitude": -122.4087},
+        "transactions": ["delivery", "pickup"], "location": {"address1": "996 Mission
+        St", "address2": null, "address3": "", "city": "San Francisco", "zip_code":
+        "94103", "country": "US", "state": "CA", "display_address": ["996 Mission
+        St", "San Francisco, CA 94103"]}, "phone": "+14157570414", "display_phone":
+        "(415) 757-0414", "distance": 2307.701249649164}, {"id": "YH1kP9XEDlIzBQjMMm7ZgA",
+        "alias": "scotts-chowder-house-san-francisco", "name": "Scott''s Chowder House",
+        "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/dvTXp95-WTqOfWpu78p-ew/o.jpg",
+        "is_closed": false, "url": "https://www.yelp.com/biz/scotts-chowder-house-san-francisco?adjust_creative=P2GaK6HBQNVuRV1M6JE1_w&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=P2GaK6HBQNVuRV1M6JE1_w",
+        "review_count": 2, "categories": [{"alias": "salad", "title": "Salad"}, {"alias":
+        "seafood", "title": "Seafood"}, {"alias": "soup", "title": "Soup"}], "rating":
+        5.0, "coordinates": {"latitude": 37.790247041840196, "longitude": -122.40542828794844},
+        "transactions": ["delivery", "pickup"], "location": {"address1": "334 Grant
+        Ave", "address2": "", "address3": null, "city": "San Francisco", "zip_code":
+        "94109", "country": "US", "state": "CA", "display_address": ["334 Grant Ave",
+        "San Francisco, CA 94109"]}, "phone": "+14153910207", "display_phone": "(415)
+        391-0207", "distance": 3233.3303096779905}], "total": 12, "region": {"center":
+        {"longitude": -122.42820739746094, "latitude": 37.767413217936834}}}'
+  recorded_at: Sun, 29 Aug 2021 19:12:01 GMT
+recorded_with: VCR 6.0.0

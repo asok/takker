@@ -35,4 +35,9 @@ class User
   # field :failed_attempts, type: Integer, default: 0 # Only if lock strategy is :failed_attempts
   # field :unlock_token,    type: String # Only if unlock strategy is :email or :both
   # field :locked_at,       type: Time
+
+  has_one :search
+
+  has_and_belongs_to_many :discarded_places, class_name: 'Place'
+  has_and_belongs_to_many :kept_places,      class_name: 'Place'
 end

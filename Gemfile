@@ -4,6 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.6.3'
 
 gem 'devise'
+gem 'faraday'
 gem 'mongoid'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.3', '>= 6.1.3.2'
@@ -23,6 +24,9 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails'
   gem 'spring-commands-rspec'
+  gem 'webmock'
+  gem 'vcr'
+  gem 'database_cleaner-mongoid'
 end
 
 group :development do
