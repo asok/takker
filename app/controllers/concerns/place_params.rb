@@ -12,6 +12,7 @@ module PlaceParams
       :image_url,
       :name,
       :rating,
+      :price,
       :phone
     )
   end

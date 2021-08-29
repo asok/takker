@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -16,13 +16,10 @@ import LocationOnIcon from '@material-ui/icons/LocationOn';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 
-
-import store, { nextPlace } from '../store';
+import store, { nextPlace, getPlaces, discardPlace, keepPlace } from '../store';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: 800,
-  },
+  root: {},
   media: {
     height: 0,
     paddingTop: '56.25%', // 16:9
@@ -51,7 +48,7 @@ function PlaceCard({place, classes, idx}) {
         <Card className={classes.root}>
           <CardHeader
             title={place.name}
-            subheader={<p><LocationOnIcon />{fullAddress(place.location)}</p>}
+            subheader={<p><LocationOnIcon fontSize={'small'} />{fullAddress(place.location)}</p>}
           />
           <CardMedia
             className={classes.media}
@@ -59,6 +56,9 @@ function PlaceCard({place, classes, idx}) {
             title={place.name}
           />
           <CardContent>
+            <Typography variant="body2" component="div">
+              Price: {place.price}
+            </Typography>
             <Typography variant="body2" component="div">
               Rating: {place.rating}/10
             </Typography>
@@ -73,9 +73,19 @@ function PlaceCard({place, classes, idx}) {
   );
 }
 
-function goToNextPlace(dispatch, places, currentPlaceIdx) {
-  if (currentPlaceIdx < places.length)
-    dispatch(nextPlace());
+async function goToNextPlace(dispatch, value, place) {
+  const { authenticity_token } = store.getState();
+
+  switch(value) {
+  case 'discard':
+    await dispatch(discardPlace({authenticity_token, place}));
+    break;
+  case 'keep':
+    await dispatch(keepPlace({authenticity_token, place}));
+    break;
+  }
+
+  await dispatch(nextPlace());
 }
 
 export default function Browser() {
@@ -84,16 +94,33 @@ export default function Browser() {
   const { currentPlaceIdx, places } = useSelector((state) => state.browser);
   const place = places[currentPlaceIdx];
 
+  const nextEnabled = place && currentPlaceIdx < places.length;
+
+  useEffect(
+    () => dispatch(getPlaces()),
+    [currentPlaceIdx < places.length]
+  );
+
   return(
-    <Container component="main">
+    <Container component="main" maxWidth="md">
       <Card className={classes.root}>
         <CardContent>
           <BottomNavigation
-            onChange={() => goToNextPlace(dispatch, places, currentPlaceIdx)}
+            onChange={(ev, value) => goToNextPlace(dispatch, value, place)}
             showLabels
           >
-            <BottomNavigationAction label="Save" icon={<FavoriteBorderIcon />} />
-            <BottomNavigationAction label="Next" icon={<ArrowForwardIosIcon />} />
+            <BottomNavigationAction
+              label="Save"
+              value="keep"
+              icon={<FavoriteBorderIcon />}
+              disabled={!place}
+            />
+            <BottomNavigationAction
+              label="Next"
+              value="discard"
+              icon={<ArrowForwardIosIcon />}
+              disabled={!nextEnabled}
+            />
           </BottomNavigation>
         </CardContent>
       </Card>

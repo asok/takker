@@ -19,7 +19,7 @@ import Container from '@material-ui/core/Container';
 import Slide from '@material-ui/core/Slide';
 import SearchIcon from '@material-ui/icons/Search';
 
-import store, { progressWizard, regressWizard, finishWizard } from '../store';
+import store, { progressWizard, regressWizard, saveSearch } from '../store';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -71,7 +71,7 @@ function renderSlides(classes) {
   const regress  = () => dispatch(regressWizard());
   const finish   = searchDiff => {
     progress(searchDiff);
-    dispatch(finishWizard(store.getState()));
+    dispatch(saveSearch(store.getState()));
   };
 
   return(

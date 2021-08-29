@@ -51,6 +51,22 @@ RSpec.describe FetchPlaces do
       end
     end
 
+    context '1 places was already kepy' do
+      let(:place) { Place.new(id: 'vmwLmMvOK-JB2uT3Cqinyw') }
+
+      before { user.kept_places << place }
+
+      it 'does not return it' do
+        VCR.use_cassette("search_green") do
+          place1, *rest = subject.call
+
+          expect(rest.length).to eq(10)
+
+          expect(place1).to include('id' => be_present)
+        end
+      end
+    end
+
     context 'some error encountered' do
       it "raises error" do
         VCR.use_cassette("search_red") do

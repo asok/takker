@@ -4,10 +4,11 @@ import { Provider } from 'react-redux';
 import { createTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
-import store, { mergeSearch, failGeo } from '../store';
+import store, { mergeSearch, failGeo, initState } from '../store';
 import Layout from './Layout';
 
-import '../server';
+// Uncomment this if you need to mock the backend server
+// import '../server';
 
 const theme = createTheme({
   palette: {
@@ -16,6 +17,15 @@ const theme = createTheme({
 });
 
 class TakkerApp extends React.Component {
+  constructor(props) {
+    super(props);
+
+    store.dispatch(initState({
+      search:             props.user.query,
+      authenticity_token: props.authenticity_token
+    }));
+  }
+
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(
       (pos) => {
@@ -32,12 +42,14 @@ class TakkerApp extends React.Component {
   }
 
   render () {
+    const { user } = this.props;
+
     return (
-        <Provider store={store}>
-          <ThemeProvider theme={theme}>
-            <Layout />
-          </ThemeProvider>
-        </Provider>
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <Layout user={user} />
+        </ThemeProvider>
+      </Provider>
     );
   }
 }

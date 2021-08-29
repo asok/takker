@@ -11,4 +11,5 @@ class Place
   field :name,      type: String
   field :rating,    type: Integer
   field :phone,     type: String
+  field :price,     type: String
 end

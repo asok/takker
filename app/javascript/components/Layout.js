@@ -20,13 +20,15 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 
 import SearchWizard from './SearchWizard';
 import Browser from './Browser';
-import { mergeSearch } from '../store';
+import store, { mergeSearch, saveSearch, getPlaces, failGeo } from '../store';
 
 const drawerWidth = 240;
 
@@ -34,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     minHeight: '1000px',
+    backgroundImage: 'linear-gradient(to top right, #AD46FE 0%, #5546FE 25%, #AD46FE 65%, #5546FE 99%)',
   },
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
@@ -90,31 +93,134 @@ const useStyles = makeStyles((theme) => ({
   },
   priceMoneyIcon: {
     minWidth: '24px',
-  }
+  },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff',
+  },
 }));
+
+function isSearchComplete(search) {
+  const {
+    longitude,
+    latitude,
+    open,
+    hot,
+    price
+  } = search;
+
+  return [longitude, latitude, open, hot, price].every(v =>
+    v !== null && v !== undefined
+  );
+}
 
 function renderMainContent() {
   const error  = useSelector(state => state.geolocationError);
-  const places = useSelector(state => state.browser.places);
+  const search = useSelector(state => state.search);
 
   if (error) {
     return <Typography>Could not find your location. It's not possible to use this app.</Typography>;
-  } else if (places === null) {
-    return <SearchWizard />;
-  } else {
+  } else if (isSearchComplete(search)) {
     return <Browser />;
+  } else {
+    return <SearchWizard />;
   }
 }
 
-export default function Layout() {
-  const classes         = useStyles();
+function SearchControls() {
+  const classes  = useStyles();
+  const dispatch = useDispatch();
+  const search   = useSelector(state => state.search);
+  const [preselectedPrice, setPreselectedPrice] = React.useState(search.price || 0);
+
+  return (
+    <List>
+      <ListItem >
+        <ListItemText primary="Search Preferences" />
+      </ListItem>
+      <ListItem button dense>
+        <ListItemIcon>
+          <Checkbox
+            edge="start"
+            checked={!!search.open}
+            onChange={(ev) => updateSearch(dispatch, {open: ev.target.checked})}
+          />
+        </ListItemIcon>
+        <ListItemText primary="Open now" />
+      </ListItem>
+
+      <ListItem button dense>
+        <ListItemIcon>
+          <Checkbox
+            edge="start"
+            checked={!!search.hot}
+            onChange={(ev) => updateSearch(dispatch, {hot: ev.target.checked})}
+          />
+        </ListItemIcon>
+        <ListItemText primary="Hot and new" />
+      </ListItem>
+
+      <ListItem button dense>
+        {[1, 2, 3, 4].map((i) =>
+          <ListItemIcon
+            key={i}
+            className={classes.priceMoneyIcon}
+            onClick={() => updateSearch(dispatch, {price: preselectedPrice})}
+          >
+            <AttachMoneyIcon
+              onMouseEnter={() => setPreselectedPrice(i)}
+              onMouseLeave={() => setPreselectedPrice(i - 1)}
+              color={i <= search.price || i <= preselectedPrice ? 'secondary' : 'inherit'}
+            />
+          </ListItemIcon>
+        )}
+        <ListItemText primary="Price" />
+        {search.price > 0 && <Button
+                               variant="outlined"
+                               color="secondary"
+                               onClick={() => updateSearch(dispatch, {price: 0}) && setPreselectedPrice(0)}
+                            >
+                              Any
+                            </Button>}
+      </ListItem>
+      <Divider />
+      <ListItem button dense>
+        <ListItemIcon>
+          <Button
+            variant="text"
+            color="primary"
+            onClick={() => window.location.href = '/sign_out'}
+          >
+            Sign out
+          </Button>
+        </ListItemIcon>
+      </ListItem>
+    </List>
+  );
+}
+
+async function updateSearch(dispatch, diff) {
+  await dispatch(mergeSearch(diff));
+  await dispatch(saveSearch(store.getState()));
+
+  dispatch(getPlaces());
+}
+
+function moneyIconColor(i, price, preselectedPrice) {
+  if (i <= price || i <= preselectedPrice)
+    return 'blue';
+  else
+    return 'inherit';
+}
+
+export default function Layout({user}) {
   const theme           = useTheme();
+  const classes         = useStyles();
   const dispatch        = useDispatch();
-  const [open, setOpen] = React.useState(false);
+  const [open,  setOpen] = React.useState(false);
 
   const search = useSelector(state => state.search);
-
-  const [preselectedPrice, setPreselectedPrice] = React.useState(search.price || 0);
+  const backdropOpen = useSelector(state => state.ajax.backdropOpen);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -144,7 +250,7 @@ export default function Layout() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Takker
+            Takker for {user.email}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -163,53 +269,7 @@ export default function Layout() {
           </IconButton>
         </div>
         <Divider />
-        <List>
-          <ListItem button dense>
-            <ListItemIcon>
-              <Checkbox
-                edge="start"
-                checked={!!search.open}
-                onChange={(ev) => dispatch(mergeSearch({open: ev.target.checked}))}
-              />
-            </ListItemIcon>
-            <ListItemText primary="Open now" />
-          </ListItem>
-
-          <ListItem button dense>
-            <ListItemIcon>
-              <Checkbox
-                edge="start"
-                checked={!!search.hot}
-                onChange={(ev) => dispatch(mergeSearch({hot: ev.target.checked}))}
-              />
-            </ListItemIcon>
-            <ListItemText primary="Hot and new" />
-          </ListItem>
-
-          <ListItem button dense>
-            {[1, 2, 3, 4].map((i) =>
-              <ListItemIcon
-                key={i}
-                className={classes.priceMoneyIcon}
-                onClick={() => dispatch(mergeSearch({price: preselectedPrice}))}
-              >
-                <AttachMoneyIcon
-                  onMouseEnter={() => setPreselectedPrice(i)}
-                  onMouseLeave={() => setPreselectedPrice(i - 1)}
-                  style={{color: moneyIconColor(i, search.price, preselectedPrice)}}
-                />
-              </ListItemIcon>
-            )}
-            <ListItemText primary="Price" />
-            {search.price > 0 && <Button
-                                   variant="text"
-                                   color="secondary"
-                                   onClick={() => dispatch(mergeSearch({price: 0})) && setPreselectedPrice(0)}
-                                 >
-                                   Any
-                                 </Button>}
-          </ListItem>
-        </List>
+        {isSearchComplete(search) && <SearchControls />}
       </Drawer>
       <main
         className={clsx(classes.content, {
@@ -217,17 +277,15 @@ export default function Layout() {
         })}
       >
         <div className={classes.drawerHeader} />
+
+        <Backdrop open={backdropOpen} className={classes.backdrop}>
+          <CircularProgress color="inherit" />
+        </Backdrop>
+
         <Box>
           {renderMainContent()}
         </Box>
       </main>
     </div>
   );
-}
-
-function moneyIconColor(i, price, preselectedPrice) {
-  if (i <= price || i <= preselectedPrice)
-    return 'blue';
-  else
-    return 'inherit';
 }
