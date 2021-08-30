@@ -74,19 +74,22 @@ function PlaceCard({place, classes, idx}) {
 }
 
 async function goToNextPlace(dispatch, value, place) {
-  const { authenticity_token } = store.getState();
+  const { authenticity_token, browser } = store.getState();
+  const { places, currentPlaceIdx } = browser;
 
   switch(value) {
   case 'discard':
     await dispatch(discardPlace({authenticity_token, place}));
-    await dispatch(getPlaces());
     break;
   case 'keep':
     await dispatch(keepPlace({authenticity_token, place}));
     break;
   }
 
-  await dispatch(nextPlace());
+  if (currentPlaceIdx >= places.length - 1)
+    await dispatch(getPlaces());
+
+  dispatch(nextPlace());
 }
 
 export default function PlacesBrowser() {

@@ -39,14 +39,14 @@ export default function PlaceCard({place, classes, idx}) {
           />
           <CardContent>
             <Typography variant="body2" component="div">
-              Price: {place.price}
+              Price: {place.price || 'N/A'}
             </Typography>
             <Typography variant="body2" component="div">
-              Rating: {place.rating}/10
+              Rating: {place.rating ? `${place.rating}/10` : 'N/A'}
             </Typography>
 
             <Typography variant="body2" component="div">
-              Phone: <a href={`tel:${place.phone}`}>{place.phone}</a>
+              Phone: <a href={`tel:${place.phone}`}>{place.phone || 'N/A'}</a>
             </Typography>
           </CardContent>
         </Card>

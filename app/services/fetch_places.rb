@@ -4,19 +4,27 @@ require 'faraday'
 require 'json'
 
 class FetchPlaces
-  SEARCH_URL = 'https://api.yelp.com/v3/businesses/search'
+  SEARCH_URL    = 'https://api.yelp.com/v3/businesses/search'
 
   ApiError = Class.new(StandardError)
 
   def initialize(user)
     @user   = user
     @query  = user.search&.query
-    @offset = 0
+    @offset = user.search&.current_offset&.value || 0
 
     raise ArgumentError, "User does not have any query" unless @query
   end
 
-  def call # rubocop:disable Metrics/AbcSize
+  def call
+    fetch_places.tap do
+      @user.search&.upsert_offset(@offset)
+    end
+  end
+
+  protected
+
+  def fetch_places # rubocop:disable Metrics/AbcSize
     acc = []
 
     while acc.empty?
@@ -24,21 +32,25 @@ class FetchPlaces
 
       if response.key?('error')
         raise ApiError, response.dig('error', 'description') || 'Unknown error'
-      elsif response.fetch('total').zero?
+      elsif response.fetch('businesses').empty?
         break
       else
         acc += response.fetch('businesses').reject do |place|
-          (@user.discarded_place_ids + @user.kept_place_ids).include?(place.fetch('id'))
+          pp place.fetch('id')
+
+          used_place_ids.include?(place.fetch('id'))
         end
       end
 
-      @offset += 1
+      @offset += response.fetch('businesses').length
     end
 
     acc.uniq
   end
 
-  protected
+  def used_place_ids
+    @used_place_ids ||= @user.discarded_place_ids + @user.kept_place_ids
+  end
 
   def query
     query = {
@@ -55,28 +67,6 @@ class FetchPlaces
   end
 
   def client
-    Client.new(ENV['YELP_API_KEY'])
-  end
-
-  class Client
-    def initialize(api_key)
-      @api_key = api_key ||
-                 raise(ArgumentError, "Set YELP_API_KEY as environmental variable for this process")
-    end
-
-    def get(url, query)
-      response = Faraday.get(url, query, headers)
-
-      JSON.parse(response.body)
-    end
-
-    protected
-
-    def headers
-      {
-        'Authorization' => "Bearer #{@api_key}",
-        'Accept'        => 'application/json',
-      }
-    end
+    YelpClient.new(ENV['YELP_API_KEY'])
   end
 end
