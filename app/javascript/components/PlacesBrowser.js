@@ -79,6 +79,7 @@ async function goToNextPlace(dispatch, value, place) {
   switch(value) {
   case 'discard':
     await dispatch(discardPlace({authenticity_token, place}));
+    await dispatch(getPlaces());
     break;
   case 'keep':
     await dispatch(keepPlace({authenticity_token, place}));
@@ -88,7 +89,7 @@ async function goToNextPlace(dispatch, value, place) {
   await dispatch(nextPlace());
 }
 
-export default function Browser() {
+export default function PlacesBrowser() {
   const classes   = useStyles();
   const dispatch  = useDispatch();
   const { currentPlaceIdx, places } = useSelector((state) => state.browser);
@@ -98,7 +99,7 @@ export default function Browser() {
 
   useEffect(
     () => dispatch(getPlaces()),
-    [currentPlaceIdx < places.length]
+    []
   );
 
   return(

@@ -11,6 +11,12 @@ export const getPlaces = createAsyncThunk('places/getPlaces', async () => {
   return response.places;
 });
 
+export const getKeptPlaces = createAsyncThunk('places/getKeptPlaces', async () => {
+  const response = await client.get('/kept_places');
+
+  return response.places;
+});
+
 export const discardPlace = createAsyncThunk('places/discardPlace', async ({authenticity_token, place}) => {
   await client.post('/discarded_places', {authenticity_token, place});
 });
@@ -34,6 +40,12 @@ export const slice = createSlice({
       progressing: true,
     },
     browser: {
+      places:          [],
+      currentPlaceIdx: 0,
+      direction:       'right',
+    },
+    keptPlacesBrowser: {
+      visible:         false,
       places:          [],
       currentPlaceIdx: 0,
       direction:       'right',
@@ -70,6 +82,16 @@ export const slice = createSlice({
     nextPlace: (state) => {
       state.browser.currentPlaceIdx++;
     },
+    nextKeptPlace: (state) => {
+      state.keptPlacesBrowser.currentPlaceIdx++;
+    },
+    prevKeptPlace: (state) => {
+      state.keptPlacesBrowser.currentPlaceIdx--;
+    },
+    toggleKeptPlacesBrowser: (state, action) => {
+      state.keptPlacesBrowser.visible = action.payload;
+
+    }
   },
   extraReducers: {
     [saveSearch.pending]: (state, action) => {
@@ -92,10 +114,30 @@ export const slice = createSlice({
     },
     [getPlaces.fulfilled]: (state, action) => {
       state.ajax.state = 'succeeded';
-      state.browser.places = (state.browser.places || []).concat(action.payload);
       state.ajax.backdropOpen = false;
+
+      const presentPlaceIds = state.browser.places.map(place => place.id);
+      const places = action.payload.filter(place =>
+        !presentPlaceIds.includes(place.id)
+      );
+      state.browser.places = (state.browser.places || []).concat(places);
     },
     [getPlaces.rejected]: (state, action) => {
+      state.ajax.state = 'failed';
+      state.ajax.error = action.payload.error;
+      state.ajax.backdropOpen = false;
+    },
+
+    [getKeptPlaces.pending]: (state, action) => {
+      state.ajax.state = 'loading';
+      state.ajax.backdropOpen = true;
+    },
+    [getKeptPlaces.fulfilled]: (state, action) => {
+      state.ajax.state = 'succeeded';
+      state.keptPlacesBrowser.places = action.payload;
+      state.ajax.backdropOpen = false;
+    },
+    [getKeptPlaces.rejected]: (state, action) => {
       state.ajax.state = 'failed';
       state.ajax.error = action.payload.error;
       state.ajax.backdropOpen = false;
@@ -131,7 +173,10 @@ export const {
   mergeSearch,
   progressWizard,
   regressWizard,
-  nextPlace
+  nextPlace,
+  nextKeptPlace,
+  prevKeptPlace,
+  toggleKeptPlacesBrowser,
 } = slice.actions;
 
 export default configureStore({

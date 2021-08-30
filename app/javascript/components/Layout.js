@@ -27,8 +27,9 @@ import MailIcon from '@material-ui/icons/Mail';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 
 import SearchWizard from './SearchWizard';
-import Browser from './Browser';
-import store, { mergeSearch, saveSearch, getPlaces, failGeo } from '../store';
+import PlacesBrowser from './PlacesBrowser';
+import KeptPlacesBrowser from './KeptPlacesBrowser';
+import store, { mergeSearch, saveSearch, getPlaces, failGeo, toggleKeptPlacesBrowser } from '../store';
 
 const drawerWidth = 240;
 
@@ -115,13 +116,16 @@ function isSearchComplete(search) {
 }
 
 function renderMainContent() {
-  const error  = useSelector(state => state.geolocationError);
-  const search = useSelector(state => state.search);
+  const error                    = useSelector(state => state.geolocationError);
+  const search                   = useSelector(state => state.search);
+  const keptPlacesBrowserVisible = useSelector(state => state.keptPlacesBrowser.visible);
 
   if (error) {
     return <Typography>Could not find your location. It's not possible to use this app.</Typography>;
+  } else if (keptPlacesBrowserVisible) {
+    return <KeptPlacesBrowser />;
   } else if (isSearchComplete(search)) {
-    return <Browser />;
+    return <PlacesBrowser />;
   } else {
     return <SearchWizard />;
   }
@@ -182,6 +186,18 @@ function SearchControls() {
                             >
                               Any
                             </Button>}
+      </ListItem>
+      <Divider />
+      <ListItem button dense>
+        <ListItemIcon>
+          <Button
+            variant="text"
+            color="default"
+            onClick={() => dispatch(toggleKeptPlacesBrowser(true))}
+          >
+            Saved restaurants
+          </Button>
+        </ListItemIcon>
       </ListItem>
       <Divider />
       <ListItem button dense>

@@ -6,14 +6,20 @@ module PlaceParams
   def place_params
     params.require(:place).permit(
       :id,
-      :address1,
-      :address2,
-      :address3,
       :image_url,
       :name,
       :rating,
       :price,
-      :phone
+      :phone,
+      location: [
+        :address1,
+        :address2,
+        :address3,
+        :zip_code,
+        :city,
+        :state,
+        :country,
+      ]
     )
   end
 
