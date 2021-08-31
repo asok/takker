@@ -266,7 +266,11 @@ export default function Layout({user}) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Takker for {user.email}
+            Takker
+            &nbsp;
+            <img src="https://takko.app/packs/media/images/takko-emblem-9119e188.png" style={{width: '24px', height: '24px'}}/>
+            &nbsp;
+            {user.email}
           </Typography>
         </Toolbar>
       </AppBar>

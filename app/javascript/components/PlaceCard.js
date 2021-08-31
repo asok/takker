@@ -46,7 +46,9 @@ export default function PlaceCard({place, classes, idx}) {
             </Typography>
 
             <Typography variant="body2" component="div">
-              Phone: <a href={`tel:${place.phone}`}>{place.phone || 'N/A'}</a>
+              Phone: <a className='phoneLink' href={`tel:${place.phone}`}>
+                       {place.phone || 'N/A'}
+                     </a>
             </Typography>
           </CardContent>
         </Card>

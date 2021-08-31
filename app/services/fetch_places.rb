@@ -36,8 +36,6 @@ class FetchPlaces
         break
       else
         acc += response.fetch('businesses').reject do |place|
-          pp place.fetch('id')
-
           used_place_ids.include?(place.fetch('id'))
         end
       end

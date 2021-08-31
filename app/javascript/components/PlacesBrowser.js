@@ -17,6 +17,7 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 
 import store, { nextPlace, getPlaces, discardPlace, keepPlace } from '../store';
+import PlaceCard from './PlaceCard';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -30,47 +31,6 @@ function fullAddress({address1, address2, address3, zip_code, city, state, count
   const address = [address1, address2, address3].filter(address => address);
 
   return `${address}, ${zip_code} ${city} ${state} ${country}`;
-}
-
-function PlaceCard({place, classes, idx}) {
-  const [expanded, setExpanded] = React.useState(false);
-
-  return (
-    <Slide
-      key={idx}
-      direction={'left'}
-      in={true}
-      mountOnEnter
-      unmountOnExit
-      timeout={{enter: 225, exit: 0}}
-    >
-      <div>
-        <Card className={classes.root}>
-          <CardHeader
-            title={place.name}
-            subheader={<p><LocationOnIcon fontSize={'small'} />{fullAddress(place.location)}</p>}
-          />
-          <CardMedia
-            className={classes.media}
-            image={place.image_url}
-            title={place.name}
-          />
-          <CardContent>
-            <Typography variant="body2" component="div">
-              Price: {place.price}
-            </Typography>
-            <Typography variant="body2" component="div">
-              Rating: {place.rating}/10
-            </Typography>
-
-            <Typography variant="body2" component="div">
-              Phone: <a href={`tel:${place.phone}`}>{place.phone}</a>
-            </Typography>
-          </CardContent>
-        </Card>
-      </div>
-    </Slide>
-  );
 }
 
 async function goToNextPlace(dispatch, value, place) {
