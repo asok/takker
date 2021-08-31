@@ -4,8 +4,7 @@ class DiscardedPlacesController < ApplicationController
   include PlaceParams
 
   def create
-    current_user.discarded_places ||= []
-    current_user.discarded_places.push(place)
+    DiscardPlace.new(current_user).call(place)
 
     render json: {ok: true}
   end

@@ -8,8 +8,7 @@ class KeptPlacesController < ApplicationController
   end
 
   def create
-    current_user.kept_places ||= []
-    current_user.kept_places.push(place)
+    KeepPlace.new(current_user).call(place)
 
     render json: {ok: true}
   end
