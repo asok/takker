@@ -26,7 +26,7 @@ bundle exec rspec
 
 ### Synopsis
 
-The app uses YELP API to get restuarants in the user's area. Once restaurant is shown user can either keep it or move to the next one. When restaurant was kept it can be browsed in the "Saved restaurants". When user moves to the next restaurant it won't be shown again.
+The app uses YELP API to get restuarants in the user's area. Once restaurant is shown user can either keep it or move to the next one. When restaurant was kept it can be browsed in the "Saved restaurants" section. When user moves to the next restaurant it won't be shown again.
 
 ### Implementation
 
@@ -43,7 +43,7 @@ git log --pretty="%ai%n%s%n%n%b%n-----------------------------------------------
 Because of the time limitation there are some shortcuts I've taken:
 * sing up/sign in is done via the default devise views - no react components for that
 * I only display the basic data on restaurants
-* the search is not quite what it should be. The boolean filters "open" and "hot" can only be either true/false not "doesn't matter"
+* the search is not quite what it should be. The boolean filters "open" and "hot" can only be either true/false. No third options "doesn't matter".
 * no url router for the react app
 * no proper handling of network errors
 * incomplete tests coverage
